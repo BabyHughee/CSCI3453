@@ -1,9 +1,11 @@
+/*Trystan Kaes -- September 11, 2019*/
 #include <fstream>
 #include <iostream>
 #include <sys/utsname.h>
 #include <string>
 #include <sstream>
 #include <ctime>
+#include <algorithm> //exclusively for changing ':' to '-' for consistent format
 
 
 /*read specified line from file */
@@ -21,11 +23,11 @@ int main(){
   if (uname(&systemInformation) < 0) //get information and check if fail
     printf("\n******USNAME_FAILURE*****\n"); //if fail say so.
   else { //if success print everything
-    printf("Sysname:  %s\n", systemInformation.sysname);
-    printf("Release:  %s\n", systemInformation.release);
-    printf("Version:  %s\n", systemInformation.version);
-    printf("Machine:  %s\n", systemInformation.machine);
-    printf("Nodename: %s\n", systemInformation.nodename);
+    printf("Sysname  -  %s\n", systemInformation.sysname);
+    printf("Release  -  %s\n", systemInformation.release);
+    printf("Version  -  %s\n", systemInformation.version);
+    printf("Machine  -  %s\n", systemInformation.machine);
+    printf("Nodename - %s\n", systemInformation.nodename);
   }
 
   ////////PART B//////////////////////
@@ -83,10 +85,13 @@ int main(){
 ///////The total amount of memory in the system and the amount of memory currently available.
 
   info = getInfo("/proc/meminfo", "MemTotal"); //extract specified line
+  std::replace( info.begin(), info.end(), ':', '-'); // replace all ':' to '-'
   std::cout << info << std::endl; //output
 
   info = getInfo("/proc/meminfo", "MemAvailable"); //extract specified line
+  std::replace( info.begin(), info.end(), ':', '-'); // replace all ':' to '-'
   std::cout << info << std::endl; //output
+
 
   return 0;
 
