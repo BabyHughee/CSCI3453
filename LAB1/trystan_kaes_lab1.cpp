@@ -53,7 +53,7 @@ int main(){
   std::cout << formatted << std::endl;
 
   //CPU has spent in user mode and system mode
-  info = getInfo("/proc/cpu", "cpu");
+  info = getInfo("/proc/stat", "cpu");
   std::cout << info << std::endl;
   std::istringstream catalyst2(info);
   catalyst2 >> info;
