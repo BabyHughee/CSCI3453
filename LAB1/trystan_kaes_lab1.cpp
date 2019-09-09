@@ -40,7 +40,7 @@ int main(){
   time_t timestamp = epoch;
   struct tm * timeinfo = localtime(&timestamp);
   char formatted[80];
-  size_t confirm = strftime(formatted, 80, "Time since last boot - %F %X", timeinfo);
+  size_t confirm = strftime(formatted, 80, "Time since last boot      - %F %X", timeinfo);
 
   std::cout << formatted << std::endl;
 
@@ -50,7 +50,8 @@ int main(){
   catalyst1 >> epoch;
   timestamp = epoch;
   timeinfo = localtime(&timestamp);
-  confirm = strftime(formatted, 80, "Amount of uptime - %j:%X", timeinfo);
+  confirm = strftime(formatted, 80, "Amount of uptime          - %j:%X", timeinfo);
+
   std::cout << formatted << std::endl;
 
   //CPU has spent in user mode and system mode
@@ -61,13 +62,14 @@ int main(){
   catalyst2 >> epoch;
   timestamp = epoch;
   timeinfo = localtime(&timestamp);
-  confirm = strftime(formatted, 80, "Time spent in user mode - %d:%X", timeinfo);
+  confirm = strftime(formatted, 80, "Time spent in user mode   - %d:%X", timeinfo);
   std::cout << formatted << std::endl;
   catalyst2 >> epoch;
   catalyst2 >> epoch;
   timestamp = epoch;
   timeinfo = localtime(&timestamp);
   confirm = strftime(formatted, 80, "Time spent in system mode - %d:%X", timeinfo);
+  
   std::cout << formatted << std::endl;
 
 
