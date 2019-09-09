@@ -10,6 +10,9 @@ std::string getInfo(std::string, std::string);
 int main(){
 
   ////////PART A//////////////////////
+  std::cout << "\n//////////////////////////////////////////////////\n";
+  std::cout << "\n//////////////////////PART A//////////////////////\n";
+  std::cout << "\n//////////////////////////////////////////////////\n";
   struct utsname systemInformation;
 
   if (uname(&systemInformation) < 0)
@@ -23,6 +26,9 @@ int main(){
   }
 
   ////////PART B//////////////////////
+  std::cout << "\n//////////////////////////////////////////////////\n";
+  std::cout << "\n//////////////////////PART B//////////////////////\n";
+  std::cout << "\n//////////////////////////////////////////////////\n";
   std::string info;
   info = getInfo("/proc/stat", "btime");
   std::istringstream catalyst(info);
@@ -30,7 +36,7 @@ int main(){
   catalyst >> info;
   catalyst >> extracted_line;
   time_t t = extracted_line;
-  std::cout << localtime(&t) << std::endl;
+  std::cout << localtime(t) << std::endl;
 
   return 0;
 
