@@ -69,6 +69,12 @@ int main(){
   confirm = strftime(formatted, 80, "Time spent in system mode - %d:%X", timeinfo);
   std::cout << formatted << std::endl;
 
+  info = getInfo("/proc/meminfo", "MemTotal");
+  std::cout << "Total Memory Used - " << info << std::endl;
+
+  info = getInfo("/proc/meminfo", "MemAvailable");
+  std::cout << "Total Memory Available - " << info << std::endl;
+
   return 0;
 
 }
