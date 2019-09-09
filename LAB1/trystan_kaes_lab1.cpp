@@ -2,7 +2,7 @@
 #include <iostream>
 #include <sys/utsname.h>
 #include <string>
-#include <stringstream>
+#include <sstream>
 
 
 std::string getInfo(std::string, std::string);
