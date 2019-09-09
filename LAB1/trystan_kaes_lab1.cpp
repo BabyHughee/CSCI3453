@@ -6,7 +6,7 @@
 
 
 std::string getInfo(std::string, std::string);
-
+std::string getInfoWDelimiter(std::string, std::string, char);
 int main(){
 
   ////////PART A//////////////////////
@@ -44,10 +44,11 @@ int main(){
   std::cout << formatted << std::endl;
 
   //The amount of time since system was last booted
-  info = getInfo("/proc/uptime", "btime");
+  info = getInfo("/proc/uptime", "btime", ' ');
   std::istringstream catalyst1(info);
   catalyst1 >> epoch;
-  std::cout << epoch;
+  std::cout << epoch << std::endl;
+
   return 0;
 
 }
@@ -72,4 +73,20 @@ while(!in.eof()){
 }
 
   return "acquisition fail";
+}
+
+std::string getInfoWDelimiter(std::string fileName, std::string line, char d){
+  std::string info;
+  std::ifstream in;
+  size_t hello;
+
+  in.open(fileName);
+
+  if(in.is_open() == false){
+    return "acquisition fail";
+  }
+
+  getline(in, info, d);
+
+  return info;
 }
