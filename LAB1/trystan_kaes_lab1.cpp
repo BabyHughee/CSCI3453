@@ -38,9 +38,9 @@ int main(){
   time_t timestamp = epoch;
   struct tm * timeinfo = localtime(&timestamp);
   char formatted[80];
-  size_t confirm = strftime(formatted, 80, "Time since last boot - %x %X", timeinfo);
+  size_t confirm = strftime(formatted, 80, "Time since last boot - %F %X", timeinfo);
 
-  std::cout << epoch << std::endl;
+  std::cout << formatted << std::endl;
 
   return 0;
 
