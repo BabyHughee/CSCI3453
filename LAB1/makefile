@@ -1,6 +1,6 @@
 CC=g++
 LD=g++
-CC_FLAGS= -std=c++11
+CC_FLAGS= -Ofast -std=c++11
 OBJECTS= trystan_kaes_lab1.o
 OB= trystan_kaes_lab1
 BINARY=trystan_kaes_lab1

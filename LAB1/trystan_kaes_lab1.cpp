@@ -3,6 +3,7 @@
 #include <sys/utsname.h>
 #include <string>
 #include <sstream>
+#include <ctime>
 
 
 std::string getInfo(std::string, std::string);
@@ -69,6 +70,8 @@ int main(){
   confirm = strftime(formatted, 80, "Time spent in system mode - %d:%X", timeinfo);
   std::cout << formatted << std::endl;
 
+
+//The total amount of memory in the system and the amount of memory currently available.
   info = getInfo("/proc/meminfo", "MemTotal");
   std::cout << info << std::endl;
 
