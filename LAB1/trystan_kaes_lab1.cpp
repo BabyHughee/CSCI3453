@@ -47,10 +47,25 @@ int main(){
   info = getInfoWDelimiter("/proc/uptime", "btime", ' ');
   std::istringstream catalyst1(info);
   catalyst1 >> epoch;
-  std::cout << epoch << std::endl;
   timestamp = epoch;
   timeinfo = localtime(&timestamp);
   confirm = strftime(formatted, 80, "Amount of uptime - %d:%X", timeinfo);
+  std::cout << formatted << std::endl;
+
+  //CPU has spent in user mode and system mode
+  info = getInfo("/proc/cpu", "cpu");
+  std::istringstream catalyst2(info);
+  catalyst2 >> info;
+  catalyst2 >> epoch;
+  timestamp = epoch;
+  timeinfo = localtime(&timestamp);
+  confirm = strftime(formatted, 80, "Time spent in user mode - %d:%X", timeinfo);
+  std::cout << formatted << std::endl;
+  catalyst2 >> epoch;
+  catalyst2 >> epoch;
+  timestamp = epoch;
+  timeinfo = localtime(&timestamp);
+  confirm = strftime(formatted, 80, "Time spent in system mode - %d:%X", timeinfo);
   std::cout << formatted << std::endl;
 
   return 0;
