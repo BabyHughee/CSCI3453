@@ -54,6 +54,7 @@ int main(){
 
   //CPU has spent in user mode and system mode
   info = getInfo("/proc/cpu", "cpu");
+  std::cout << info << std::endl;
   std::istringstream catalyst2(info);
   catalyst2 >> info;
   catalyst2 >> epoch;
