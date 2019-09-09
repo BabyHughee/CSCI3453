@@ -40,7 +40,7 @@ int main(){
   time_t timestamp = epoch;
   struct tm * timeinfo = localtime(&timestamp);
   char formatted[80];
-  size_t confirm = strftime(formatted, 80, "Time of last boot      - %F %X", timeinfo);
+  size_t confirm = strftime(formatted, 80, "Time of last boot         - %F %X", timeinfo);
 
   std::cout << formatted << std::endl;
 
@@ -50,7 +50,7 @@ int main(){
   catalyst1 >> epoch;
   timestamp = epoch;
   timeinfo = localtime(&timestamp);
-  confirm = strftime(formatted, 80, "Time since last boot          - %j:%X", timeinfo);
+  confirm = strftime(formatted, 80, "Time since last boot      - %j:%X", timeinfo);
 
   std::cout << formatted << std::endl;
 
