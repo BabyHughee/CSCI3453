@@ -84,12 +84,18 @@ int main(){
 
 ///////The total amount of memory in the system and the amount of memory currently available.
 
+  int memory;
   info = getInfo("/proc/meminfo", "MemTotal"); //extract specified line
-  std::replace( info.begin(), info.end(), ':', '-'); // replace all ':' to '-'
-  std::cout << info << std::endl; //output
+  std::stringstream catalyst3(info);
+  catalyst3 >> info;
+  catalyst3 >> memory;
+  std::cout << "Total Memory              - " << memory << " kB" std::endl; //output
 
   info = getInfo("/proc/meminfo", "MemAvailable"); //extract specified line
-  std::replace( info.begin(), info.end(), ':', '-'); // replace all ':' to '-'
+  std::stringstream catalyst4(info);
+  catalyst4 >> info;
+  catalyst4 >> memory;
+  std::cout << "Available Memory              - " << memory << " kB" std::endl; //output
   std::cout << info << std::endl; //output
 
 
