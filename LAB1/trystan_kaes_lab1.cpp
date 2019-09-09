@@ -50,7 +50,7 @@ while(!in.eof()){
   getline(in, info);
   hello = info.find(line);
 
-  if(hello != string::npos){
+  if(hello != std::string::npos){
     return info;
   }
 }
