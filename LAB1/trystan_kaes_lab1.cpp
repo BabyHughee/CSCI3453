@@ -32,10 +32,16 @@ int main(){
   std::string info;
   info = getInfo("/proc/stat", "btime");
   std::istringstream catalyst(info);
-  int extracted_line;
+  int epoch;
   catalyst >> info;
-  catalyst >> extracted_line;
-  std::cout << extracted_line << std::endl;
+  catalyst >> epoch;
+  time_t timestamp = epoch;
+  // struct tm * = gmtime(&timestamp);
+  char* formatted;
+  size_t max = 20;
+  size_t confirm = strftime(formatted, max, "Time since last boot - %x %X", gmtime(&timestamp));
+
+  std::cout << epoch << std::endl;
 
   return 0;
 
