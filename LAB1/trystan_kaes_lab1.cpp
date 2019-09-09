@@ -95,8 +95,7 @@ int main(){
   std::stringstream catalyst4(info);
   catalyst4 >> info;
   catalyst4 >> memory;
-  std::cout << "Available Memory              - " << memory << " kB" << std::endl; //output
-  std::cout << info << std::endl; //output
+  std::cout << "Available Memory          - " << memory << " kB" << std::endl; //output
 
 
   return 0;
