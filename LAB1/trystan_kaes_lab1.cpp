@@ -54,7 +54,7 @@ int main(){
 
   //CPU has spent in user mode and system mode
   info = getInfo("/proc/stat", "cpu");
-  std::cout << info << std::endl;
+  // std::cout << info << std::endl;
   std::istringstream catalyst2(info);
   catalyst2 >> info;
   catalyst2 >> epoch;
@@ -70,10 +70,10 @@ int main(){
   std::cout << formatted << std::endl;
 
   info = getInfo("/proc/meminfo", "MemTotal");
-  std::cout << "Total Memory Used - " << info << std::endl;
+  std::cout << info << std::endl;
 
   info = getInfo("/proc/meminfo", "MemAvailable");
-  std::cout << "Total Memory Available - " << info << std::endl;
+  std::cout << info << std::endl;
 
   return 0;
 
