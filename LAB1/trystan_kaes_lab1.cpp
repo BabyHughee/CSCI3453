@@ -40,7 +40,7 @@ int main(){
   int epoch; //holds time integers
   catalyst >> info; //strip leading string
   catalyst >> epoch; // extract integer
-  time_t timestamp = epoch; //convert to timestamp
+  time_t timestamp = epoch; //convert integer to timestamp
   struct tm * timeinfo = localtime(&timestamp); //convert time_t into struct tm*
   char formatted[80]; //holds the output for each time print
   /*convert struct tm* into required format*/
