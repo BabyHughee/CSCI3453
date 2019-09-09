@@ -39,7 +39,8 @@ int main(){
   time_t timestamp = epoch;
   struct tm * timeinfo = localtime(&timestamp);
   char formatted[80];
-  size_t confirm = strftime(formatted, 80, "Time since last boot - %x %X", timeinfo);
+  size_t confirm = strftime(formatted, 80, "Time since last boot - %F %X", timeinfo);
+
   std::cout << formatted << std::endl;
 
   //The amount of time since system was last booted
