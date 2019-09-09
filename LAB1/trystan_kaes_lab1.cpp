@@ -44,7 +44,7 @@ int main(){
   std::cout << formatted << std::endl;
 
   //The amount of time since system was last booted
-  info = getInfo("/proc/uptime", "btime", ' ');
+  info = getInfoWDelimiter("/proc/uptime", "btime", ' ');
   std::istringstream catalyst1(info);
   catalyst1 >> epoch;
   std::cout << epoch << std::endl;
