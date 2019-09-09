@@ -27,7 +27,7 @@ int main(){
     printf("Release  -  %s\n", systemInformation.release);
     printf("Version  -  %s\n", systemInformation.version);
     printf("Machine  -  %s\n", systemInformation.machine);
-    printf("Nodename - %s\n", systemInformation.nodename);
+    printf("Nodename -  %s\n", systemInformation.nodename);
   }
 
   ////////PART B//////////////////////
