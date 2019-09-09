@@ -49,7 +49,7 @@ int main(){
   catalyst1 >> epoch;
   timestamp = epoch;
   timeinfo = localtime(&timestamp);
-  confirm = strftime(formatted, 80, "Amount of uptime - %d:%X", timeinfo);
+  confirm = strftime(formatted, 80, "Amount of uptime - %j:%X", timeinfo);
   std::cout << formatted << std::endl;
 
   //CPU has spent in user mode and system mode
