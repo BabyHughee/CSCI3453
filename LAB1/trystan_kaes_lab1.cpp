@@ -25,7 +25,7 @@ int main(){
   ////////PART B//////////////////////
   std::string info;
   info = getInfo("/proc/stat", "btime");
-  istringstream catalyst(info);
+  std::istringstream catalyst(info);
   int extracted_line;
   catalyst >> info;
   catalyst >> extracted_line;
