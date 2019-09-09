@@ -2,6 +2,7 @@
 #include <iostream>
 #include <sys/utsname.h>
 #include <string>
+#include <stringstream>
 
 
 std::string getInfo(std::string, std::string);
@@ -22,7 +23,14 @@ int main(){
   }
 
   ////////PART B//////////////////////
-
+  std::string info;
+  info = getInfo("/proc/stat", "btime");
+  istringstream catalyst(info);
+  int extracted_line;
+  catalyst >> info;
+  catalyst >> extracted_line;
+  time_t t = extracted_line;
+  cout << localtime(&t) << std::endl;
 
   return 0;
 
@@ -31,6 +39,7 @@ int main(){
 std::string getInfo(std::string fileName, std::string line){
   std::string info;
   std::ifstream in;
+  size_t hello;
 
   in.open(fileName);
 
@@ -39,11 +48,12 @@ std::string getInfo(std::string fileName, std::string line){
   }
 while(!in.eof()){
   getline(in, info);
-  if(info.compare(0,line.size() - 1,line) == 0){
+  hello = info.find(line);
+
+  if(hello != string::npos){
     return info;
   }
 }
 
   return "acquisition fail";
 }
-
