@@ -50,7 +50,7 @@ int main(){
   std::cout << epoch << std::endl;
   timestamp = epoch;
   timeinfo = localtime(&timestamp);
-  size_t confirm = strftime(formatted, 80, "Amount of uptime - %d:%X", timeinfo)
+  confirm = strftime(formatted, 80, "Amount of uptime - %d:%X", timeinfo)
   std::cout << formatted << std::endl;
 
   return 0;
