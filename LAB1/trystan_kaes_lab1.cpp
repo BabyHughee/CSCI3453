@@ -36,7 +36,7 @@ int main(){
   catalyst >> info;
   catalyst >> extracted_line;
   time_t t = extracted_line;
-  std::cout << localtime(t) << std::endl;
+  std::cout << localtime(&t) << extracted_line << std::endl;
 
   return 0;
 
