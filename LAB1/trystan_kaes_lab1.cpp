@@ -36,10 +36,9 @@ int main(){
   catalyst >> info;
   catalyst >> epoch;
   time_t timestamp = epoch;
-  // struct tm * = gmtime(&timestamp);
-  char* formatted;
-  size_t max = 20;
-  size_t confirm = strftime(formatted, max, "Time since last boot - %x %X", gmtime(&timestamp));
+  struct tm * timeinfo = localtime(&timestamp);
+  char formatted[80];
+  size_t confirm = strftime(formatted, 80, "Time since last boot - %x %X", timeinfo);
 
   std::cout << epoch << std::endl;
 
