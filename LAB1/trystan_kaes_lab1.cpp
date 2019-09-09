@@ -26,6 +26,7 @@ int main(){
   }
 
   ////////PART B//////////////////////
+  //time since system was last booted
   std::cout << "\n//////////////////////////////////////////////////";
   std::cout << "\n//////////////////////PART B//////////////////////";
   std::cout << "\n//////////////////////////////////////////////////\n";
@@ -42,6 +43,11 @@ int main(){
 
   std::cout << formatted << std::endl;
 
+  //The amount of time since system was last booted
+  info = getInfo("/proc/uptime", "btime");
+  catalyst = info;
+  catalyst >> epoch
+  std::cout << epoch;
   return 0;
 
 }
