@@ -48,6 +48,10 @@ int main(){
   std::istringstream catalyst1(info);
   catalyst1 >> epoch;
   std::cout << epoch << std::endl;
+  timestamp = epoch;
+  timeinfo = localtime(&timestamp);
+  size_t confirm = strftime(formatted, 80, "Amount of uptime - %d:%X", timeinfo)
+  std::cout << formatted << std::endl;
 
   return 0;
 
