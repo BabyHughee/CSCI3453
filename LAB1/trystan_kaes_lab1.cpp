@@ -75,14 +75,14 @@ int main(){
   // timeinfo = localtime(&timestamp);
   // confirm = strftime(formatted, 80, "Time spent in user mode   - %d:%X", timeinfo);
   // std::cout << formatted << std::endl;
-  std::cout << "Time spent in user mode   - " << epoch << " sec" << std::endl; //output first integer
+  std::cout << "Time spent in user mode   - " << (epoch/100) << " sec" << std::endl; //output first integer
   catalyst2 >> epoch; //strip second integer
   catalyst2 >> epoch; //extrct third integer
   // timestamp = epoch;
   // timeinfo = localtime(&timestamp);
   // confirm = strftime(formatted, 80, "Time spent in system mode - %d:%X", timeinfo);
   // std::cout << formatted << std::endl;
-  std::cout << "Time spent in system mode - " << epoch << " sec" << std::endl; //output third integer
+  std::cout << "Time spent in system mode - " << (epoch/100) << " sec" << std::endl; //output third integer
 
 ///////The total amount of memory in the system and the amount of memory currently available.
 
