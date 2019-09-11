@@ -5,7 +5,6 @@
 #include <string>
 #include <sstream>
 #include <ctime>
-#include <algorithm> //exclusively for changing ':' to '-' for consistent format
 
 
 /*read specified line from file */
