@@ -1,0 +1,60 @@
+
+TRYSTAN KAES
+ID 108652414 (kaest)
+
+CSCI 3453
+
+Lab1
+
+**************************************************************
+************ TO COMPILE ----- 'make all'	               *****
+************ TO RUN --------- './trystan_kaest_lab1' 	   *****
+**************************************************************
+
+DESCRIPTION:
+The primary goal of this assignment is to understand and gain some familiarity
+with the system call interface in Unix Environment. In this assignment you will
+be using system call and proc filesystem to gather information about the system.
+
+
+************Structure***********
+This entire program is contained within the trystan_kaest_lab1.cpp file.
+Upon running of this program it will print out to the screen all the
+systemInformation that was gathered. Two functions are seperated out that are
+designed to handle reading in from proc files in a clean way.
+
+It also has a makefile in order to compile.
+
+**************Status************
+
+-> Tested on MacBook Pro running Catalina(10.15 beta); 3.1GHz Intel Core i7;
+   16 GB 1867 MHz DDR3
+
+	-using gcc/g++ 7.2.0 processor
+
+-> Tested on csegrid.ucdenver.pvt
+
+
+**********************
+** WORKS COMPLETELY **
+**********************
+
+
+
+
+************Copyright***********
+
+
+   Copyright {2019} {Trystan Kaes}
+
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
