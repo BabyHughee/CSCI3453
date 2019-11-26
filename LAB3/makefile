@@ -1,6 +1,6 @@
 CC=g++
 LD=g++
-CC_FLAGS= -std=c++11
+CC_FLAGS= -std=c++11 -g
 OBJECTS= trystan_kaes_lab3.o lab3_implementation.o
 OB= trystan_kaes_lab3
 BINARY=myscheduler
