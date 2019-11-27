@@ -43,6 +43,10 @@ inline bool compareSRTF(const process_container& a, const process_container& b)
     return a.arrival_time < b.arrival_time; //resolve conflict with FCFS
 }
 
+inline bool compareRR(const process_container& a, const process_container& b)
+{
+    return a.finish_time < b.finish_time; //resolve conflict with FCFS
+}
 
 exception_status read(std::vector<process_container>&, std::string);
 void print(std::vector<process_container>&);
