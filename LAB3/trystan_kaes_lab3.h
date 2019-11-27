@@ -25,11 +25,19 @@ class process_container{
                                                 turn_around(0), context_switchs(0)
         {   }
 };
+
+struct process_data{
+    double burst;
+    double wait;
+    double turnaround;
+    int context_switchs;
+};
 ////////////END PROCESS_CONTAINER DECLARATIONS///////////////////////////
 
 
 exception_status read(std::vector<process_container>&, std::string);
 void print(std::vector<process_container>&);
+process_data averages(std::vector<process_container>&);
 void fcfs(std::vector<process_container>&);
 void srtf(std::vector<process_container>&);
 void rr(std::vector<process_container>&);

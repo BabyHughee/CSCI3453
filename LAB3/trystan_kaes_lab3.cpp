@@ -35,7 +35,7 @@ int main(int argv, char *argc[]){
 				  << std::endl;
 	}
 
-	// std::cout << process_list.size() << std::endl;
+	std::cout << process_list.size() << std::endl;
 
 	 fcfs(process_list);
 	 print(process_list);
