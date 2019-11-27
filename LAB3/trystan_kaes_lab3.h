@@ -34,12 +34,22 @@ struct process_data{
 };
 ////////////END PROCESS_CONTAINER DECLARATIONS///////////////////////////
 
+/**Comparison function for vector sorting*/
+inline bool compareSRTF(const process_container& a, const process_container& b)
+{
+    if( a.burst_time != b.burst_time){ //if no conflict
+        return a.burst_time < b.burst_time;
+    }
+    return a.arrival_time < b.arrival_time; //resolve conflict with FCFS
+}
+
 
 exception_status read(std::vector<process_container>&, std::string);
 void print(std::vector<process_container>&);
 process_data averages(std::vector<process_container>&);
 void fcfs(std::vector<process_container>&);
 void srtf(std::vector<process_container>&);
-void rr(std::vector<process_container>&);
+void rr(std::vector<process_container>&, int);
+void testPrint(std::vector<process_container>& process_list);
 
 #endif

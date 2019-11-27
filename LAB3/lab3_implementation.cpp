@@ -54,71 +54,54 @@
     return error;
 }
 
+/** This function prints the results of the algorithm used in formatted fashion
+  * @param process_list the algorithm-traversed list filled with data
+  */
 void print(std::vector<process_container> &process_list){
+    int ms_limit = 20;
+    // int character_limit = 77;
     int reset = 0;
     for (std::vector<process_container>::iterator i = process_list.begin(); i != process_list.end(); ++i){
-        if((i-1)->burst_time == 1 && i->pid > 9){
-            if((i-1)->pid > 9){
-                reset-=2;
-            }else{
-                reset-=1;
+        printf("P%-3i",i->pid); //print out the process and fill spaces
+        reset+=1; //we've used up one millisecond
+
+        if((reset+i->burst_time) <= ms_limit){ //if we have no line wraps
+            for(int j = 0; j < i->burst_time-1; ++j){ //business as usual
+                printf("    "); //skip past 1 millisen
+                reset+=1; //for every print we've used up a millisecond
             }
-        }
-        printf("P%i",i->pid);
-        reset+=1;
-        if((i->burst_time+reset) > 31){ //if there is a line split
-            int line1 = 30 - reset; //whats remains on line 1
-            int line2 = i->burst_time - line1 - 1; //whats left for line 2
-            if(line1 == -1){
-                printf("%i", line1);
-            }
-            for(int j = 0; j < line1-1; ++j){
-                printf("  ");
+        }else{ //if there is a line wrap
+
+                //how much space is left on this line
+            int leftover = ms_limit - reset;
+
+                //fill the rest of leftovers
+            for(int j = 0; j < leftover; ++j){
+                printf("    ");
+                reset+=1; //for every print we've used up a millisecond
             }
 
-            printf("\n");
+                //print ms line
+            printf("\n*   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   \n");
             reset = 0;
-            printf("* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *");
-            printf("\n");
 
-            reset += line2;
-            for(int j = 0; j < line2-1; ++j){
-                printf("  ");
+                 //how much burst remains on next line
+            int nextLine = i->burst_time - leftover;
+
+                //fill the remainder on the next line
+            for(int j = 1; j < nextLine; ++j){
+                printf("    ");
+                reset+=1; //for every print we've used up a millisecond
             }
-        }else{
-            reset += i->burst_time - 1;
-            if((i-1)->burst_time == 1 && i->pid > 9){
-                if((i-1)->pid > 9){
-                    for(int j = 2; j < (i->burst_time-1)*2; ++j){
-                        printf(" ");
-                    }
-                }else{
-                    for(int j = 1; j < (i->burst_time-1)*2; ++j){
-                        printf(" ");
-                    }
-                }
-            }else if((i-1)->pid > 9){
-                for(int j = 1; j < (i->burst_time-1)*2; ++j){
-                    printf(" ");
-                }
-            }else{
-                for(int j = 0; j < i->burst_time-1; ++j){
-                    printf("  ");
-                }
-            }
+
         }
-
-        if(reset > 30){
-            printf("\n");
+        if(reset > ms_limit && i != process_list.end()){
             reset = 0;
-            printf("* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *");
-            printf("\n");
+            printf("\n*   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   \n"); //20 ms per line
         }
     }
-    printf("\n");
-    printf("* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *");
-    printf("\n");
-    printf("(each star represents one ms)\n");
+    printf("\n*   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   "); //20 ms per line
+    printf("\n(each star represents one ms)\n");
 
     ////////////////////TABLE TIME////////////////////
 
@@ -153,7 +136,7 @@ void print(std::vector<process_container> &process_list){
 
 
         printf("|\n");
-        printf("|______|__________|_______|_________|_________|_____________|__________|\n\n");
+        printf("|______|__________|_______|_________|_________|_____________|__________|\n");
     }
 
     process_data data = averages(process_list);
@@ -165,6 +148,9 @@ void print(std::vector<process_container> &process_list){
 
 }
 
+/** This function processed the averages and totals of processes
+  * @param process_list the algorithm-traversed list filled with data
+  */
 process_data averages(std::vector<process_container>&process_list){
     process_data data;
     int temp;
@@ -176,14 +162,14 @@ process_data averages(std::vector<process_container>&process_list){
     }
     data.burst = (double)temp / (double)process_list.size();
 
-    //AVERAGE waiting_time
+    //AVERAGE WAIT_TIME
     temp = 0;
     for (std::vector<process_container>::iterator i = process_list.begin(); i != process_list.end(); ++i){
         temp += i->waiting_time;
     }
     data.wait = (double)temp / (double)process_list.size();
 
-    //AVERAGE turn_around time
+    //AVERAGE TURN_AROUND TIME
     temp = 0;
     for (std::vector<process_container>::iterator i = process_list.begin(); i != process_list.end(); ++i){
         temp += i->turn_around;
@@ -201,30 +187,37 @@ process_data averages(std::vector<process_container>&process_list){
 }
 
 
+/** This function simulates scheduling using the First Come First Serve algorithm
+  * @param process_list the list of processes to be scheduled and processed
+  */
 void fcfs(std::vector<process_container>&process_list){
 
-    //Wait Times
+///////////////Wait Times///////////////
     for (std::vector<process_container>::iterator i = process_list.begin(); i != process_list.end(); ++i){
-        if(i == process_list.begin()){
+        if(i == process_list.begin()){ //catches the base case
             i->waiting_time = 0;
             continue;
         }
+
+        //Waiting time of A[i] | A[i].wait_time = A[i-1].CPU_burst + A[i-1].wait_time
         i->waiting_time =  (i-1)->burst_time + (i-1)->waiting_time;
     }
 
 
-    //Turn Around Times
+///////////////Turn Around Times///////////////
     for (std::vector<process_container>::iterator i = process_list.begin(); i != process_list.end(); ++i){
+        //Turn around time of A[i] | A[i].turnaround = A[i].CPU_burst + A[i].wait_time
         i->turn_around =  i->burst_time + i->waiting_time;
     }
 
-    //Finish Times
+///////////////Finish Times///////////////
     for (std::vector<process_container>::iterator i = process_list.begin(); i != process_list.end(); ++i){
-        if(i == process_list.begin()){
+        if(i == process_list.begin()){ //catches the base case
             i->finish_time = i->burst_time;
             continue;
         }
 
+        // Finish time of A[i] | A[i].finish_time = A[i-1].finish_time + A[i].CPU_burst
         i->finish_time =  (i-1)->finish_time + i->burst_time;
     }
 
@@ -233,14 +226,80 @@ void fcfs(std::vector<process_container>&process_list){
     return;
 }
 
-void srtf(std::vector<process_container>&){
+/** This function simulates scheduling using the Shortest Remaining Time First algorithm
+  * @param process_list the list of processes to be scheduled and processed
+  */
+void srtf(std::vector<process_container>& process_list){
+    sort(process_list.begin(),process_list.end(),compareSRTF);
+    fcfs(process_list);
+    return;
+}
+
+
+/** This function simulates scheduling using the Round Robin algorithm
+  * @param process_list the list of processes to be scheduled and processed
+  */
+void rr(std::vector<process_container>& process_list, int quantum){
+    printf("\nRR HAPPENED\n");
+    printf("WITH Q=%i",quantum);
+
+
+////////////WAIT_TIMES////////////////
+    int r_burst[process_list.size()];
+    int runtime = 0;
+    int j = 0;
+    for (std::vector<process_container>::iterator i = process_list.begin(); i != process_list.end(); ++i, ++j){
+        r_burst[j] = i->burst_time;
+    }
+
+    bool m_exit = false;
+    while(!m_exit){
+        //iterate through all processes
+        m_exit = true;
+        j = 0;
+        for (std::vector<process_container>::iterator i = process_list.begin(); i != process_list.end(); ++i, ++j){
+            //if this hasn't been processed
+            if(r_burst[j] > 0){
+                    //since we are back here... we ain't done yet
+                m_exit = false;
+                //if we can't finish it in this run
+                if(r_burst[j] > quantum){
+                    r_burst[j] -= quantum;
+                    runtime += quantum;
+                }else{ //if we CAN finish it in this run
+                        //the time that it had left
+                    runtime += r_burst[j];
+                        //the whole time it took minus when it was actually processing
+                    i->waiting_time = runtime - i->burst_time;
+                        //Since we finished... We don't need no more
+                    r_burst[j] = 0;
+
+                }
+            }
+        }
+    }
+
+///////////////Turn Around Times///////////////
+    for (std::vector<process_container>::iterator i = process_list.begin(); i != process_list.end(); ++i){
+        //Turn around time of A[i] | A[i].turnaround = A[i].CPU_burst + A[i].wait_time
+        i->turn_around =  i->burst_time + i->waiting_time;
+    }
+
+///////////////Finish Times///////////////
+    for (std::vector<process_container>::iterator i = process_list.begin(); i != process_list.end(); ++i){
+            i->finish_time = i->burst_time + i->waiting_time;
+    }
 
 
     return;
 }
 
-void rr(std::vector<process_container>&){
 
-
-    return;
+void testPrint(std::vector<process_container>& process_list){
+    for (std::vector<process_container>::const_iterator i = process_list.begin(); i != process_list.end(); ++i){
+		std::cout << i->pid << " "
+				  << i->arrival_time << " "
+				  << i->burst_time << " "
+				  << std::endl;
+	}
 }
