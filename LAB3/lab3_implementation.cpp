@@ -56,27 +56,27 @@
 
 ////////////////SORT IMPLEMENTATION////////////
 
-/** This sort emulates the CPU context switching
-  *\@param process_list The list of processes.
-  *\@param n The amount of processes in the process list.
-  */
-void insertionSort(std::vector<process_container>& process_list, int n)
-{
-    process_container key;
-    for (int i = 1; i < n; i++)
-    {
-        key = process_list[i];
-        int j = i - 1;
-
-        while(j >= 0 && process_list[j] > key)
-        {
-            key.context_switchs += 1;
-            std::swap(process_list[j],process_list[j+1]);
-            j = j - 1;
-        }
-        process_list[j + 1] = key;
-    }
-}
+// /** This sort emulates the CPU context switching
+//   *\@param process_list The list of processes.
+//   *\@param n The amount of processes in the process list.
+//   */
+// void insertionSort(std::vector<process_container>& process_list, int n)
+// {
+//     process_container key;
+//     for (int i = 1; i < n; i++)
+//     {
+//         key = process_list[i];
+//         int j = i - 1;
+//
+//         while(j >= 0 && process_list[j] > key)
+//         {
+//             key.context_switchs += 1;
+//             std::swap(process_list[j],process_list[j+1]);
+//             j = j - 1;
+//         }
+//         process_list[j + 1] = key;
+//     }
+// }
 
 /** This function prints the results of the algorithm used in formatted fashion
   * @param process_list the algorithm-traversed list filled with data
@@ -386,54 +386,128 @@ void fcfs(std::vector<process_container>&process_list){
   * @param process_list the list of processes to be scheduled and processed
   */
 void srtf(std::vector<process_container>& process_list){
-    // std::priority_queue<process_container*, std::vector<process_container*>, std::greater<process_container*>> backlog;
-    // std::vector<process_container> running_process = process_list;
-    // process_container current_process;
-    // int processRun;
-    // int runtime = 0;
-    //
-    //
-    // //iterate through all processes
-    // for (int i = 0; i < running_process.size(); ++i){
-    //
-    //
-    //     //run the current process until a new arrival
-    //     processRun = 0;
-    //     while(runtime < running_process[i + 1].arrival_time || running_process[i].burst_time > 0){
-    //         --running_process[i].burst_time;
-    //         ++runtime;
-    //         ++processRun;
-    //     }
-    //
-    //     if(runtime == running_process[i + 1].arrival_time){
-    //         backlog.push(&running_process[i + 1]);
-    //     }
-    //
-    //     if(running_process[i] < (*backlog.top())){
-    //         --i;
-    //     }else{
-    //         ++running_process[i].context_switchs;
-    //     }
-    //
-    //
-    // }
-    //
-    // bool m_exit = false;
-    // while(!m_exit){
-    //     m_exit = true;
-    //
-    //     for (int i = 0; i < running_process.size(); ++i){
-    //
-    //         if(running_process[i].burst_time > 0){
-    //             m_exit = false;
-    //
-    //         }
-    //
-    //
-    //     }
-    // }
+    std::priority_queue<process_container*, std::vector<process_container*>, decltype(*compareSRTF)> backlog(*compareSRTF);
+    std::vector<process_container> running_process = process_list;
+    process_container* current_process;
+    int processRun = 0;
+    int runtime = 0;
+    int queue_index = 1;
+    int ms_limit = 20;
+    int reset = 0;
+    backlog.push(&running_process[0]); //get first process
+    current_process = backlog.top(); //load first process
 
-    std::sort(process_list.begin(), process_list.end());
+    /////////LOAD THE BACKLOG
+    while(queue_index < running_process.size()) {
+
+        if(current_process->pid != backlog.top()->pid){
+            // printf("P%-3i |  RUN: %i  |  REMAINING: %i\n",current_process->pid, processRun, current_process->burst_time); //print out the process and fill spaces
+            ++current_process->context_switchs;
+            current_process = backlog.top();
+            processRun = 0;
+        }
+
+        if(runtime < running_process[queue_index].arrival_time){
+            --current_process->burst_time;
+            ++runtime;
+            ++processRun;
+        }else{
+            backlog.push(&running_process[queue_index]);
+            ++queue_index;
+        }
+
+        if(current_process->burst_time == 0){
+            backlog.pop();
+            // current_process = backlog.top();
+            // processRun = 0;
+        }
+
+        //NOW WE HANDLE THE PRINT OF THAT PROCESS
+        if(reset < ms_limit){
+            if(processRun == 1){
+                printf("P%-3i",current_process->pid); //print out the process and fill spaces
+                reset+=1; //we've used up one millisecond
+            }else{
+                printf("    ");
+                reset+=1; //we've used up one millisecond
+            }
+        }else{
+            reset = 0;
+            printf("\n*   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   \n");
+        }
+
+    }
+
+    current_process = backlog.top();
+
+    /////////FINISH Processing/////////////
+    while(!backlog.empty()) {
+
+        if(current_process->pid != backlog.top()->pid){
+            ++current_process->context_switchs;
+            current_process = backlog.top();
+            processRun = 0;
+        }
+
+        while(current_process->burst_time > 0){
+            --current_process->burst_time;
+            ++runtime;
+            ++processRun;
+        }
+        if(current_process->burst_time == 0 && backlog.top()->pid == current_process->pid){
+            backlog.pop();
+        }
+
+        //NOW WE HANDLE THE PRINT OF THAT PROCESS
+
+        printf("P%-3i",current_process->pid); //print out the process and fill spaces
+        reset+=1; //we've used up one millisecond
+
+        if((reset+processRun) <= ms_limit){ //if we have no line wraps
+            for(int j = 0; j < processRun-1; ++j){ //business as usual
+                printf("    "); //skip past 1 millisen
+                reset+=1; //for every print we've used up a millisecond
+            }
+        }else{ //if there is a line wrap
+
+                //how much space is left on this line
+            int leftover = ms_limit - reset;
+
+                //fill the rest of leftovers
+            for(int j = 0; j < leftover; ++j){
+                printf("    ");
+                reset+=1; //for every print we've used up a millisecond
+            }
+
+                //print ms line
+            printf("\n*   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   \n");
+            reset = 0;
+
+                 //how much burst remains on next line
+            int nextLine = processRun - leftover;
+
+                //fill the remainder on the next line
+            for(int j = 1; j < nextLine; ++j){
+                printf("    ");
+                reset+=1; //for every print we've used up a millisecond
+            }
+
+        }
+        if(reset > ms_limit && current_process->pid != process_list.end()->pid){
+            reset = 0;
+            printf("\n*   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   \n"); //20 ms per line
+        }
+
+    }
+
+    printf("\n*   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   "); //20 ms per line
+    printf("\n(each star represents one ms)\n");
+
+    for(int i = 0; i < process_list.size(); ++i){
+        process_list[i].context_switchs = running_process[i].context_switchs;
+    }
+
+    // std::sort(process_list.begin(), process_list.end());
     fcfs(process_list);
     return;
 }

@@ -43,11 +43,11 @@ int main(int argv, char *argc[]){
 	printf("************************************************************\n");
 	// printf("	On process list \"%s\"\n",argc[1]);
 
-	// if(strcmp(argc[2],"RR") == 0){
-	// 	printRR(process_list,atoi(argc[3]));
-	// }else{
-	// 	print(process_list);
-	// }
+	if(strcmp(argc[2],"RR") == 0){
+		printRR(process_list,atoi(argc[3]));
+	}else{
+		print(process_list);
+	}
 
 	return 0;
 

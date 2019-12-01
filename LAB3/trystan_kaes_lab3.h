@@ -36,7 +36,6 @@ class process_container{
             return this->arrival_time > other.arrival_time; //resolve conflict with FCFS
         }
 
-
         //CONSTRUCTORS
         process_container(): pid(0), arrival_time(0), burst_time(0), finish_time(0),
                              waiting_time(0), turn_around(0), context_switchs(0)
@@ -58,15 +57,19 @@ struct process_data{
 ////////////END PROCESS_CONTAINER DECLARATIONS///////////////////////////
 
 /**Comparison function for vector sorting*/
-inline bool compareSRTF(process_container& a, process_container& b)
+inline bool compareSRTF(process_container* a, process_container* b)
 {
-    a.context_switchs += 1;
-    b.context_switchs += 1;
-    if( a.burst_time != b.burst_time){ //if no conflict
-        return a.burst_time < b.burst_time;
+    if( a->burst_time != b->burst_time){ //if no conflict
+        return a->burst_time < b->burst_time;
     }
-    return a.arrival_time < b.arrival_time; //resolve conflict with FCFS
+    return a->arrival_time < b->arrival_time; //resolve conflict with FCFS
 }
+
+// template<typename process_container>
+// bool compareSRTF(process_container left, process_container right)
+// {
+//     return left < right;
+// }
 
 
 exception_status read(std::vector<process_container>&, std::string);
