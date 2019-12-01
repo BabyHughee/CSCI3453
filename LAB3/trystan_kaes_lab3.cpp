@@ -23,6 +23,10 @@ int main(int argv, char *argc[]){
 	exception_status error = read(process_list, argc[1]); //read in the process'
 	if(error.error == true){ std::cout << error.status << std::endl; } //error ? output : move on
 
+	std::priority_queue<process_container*, std::vector<process_container*>, std::greater<process_container*>> backlog;
+
+
+
 	if(strcmp(argc[2],"FCFS") == 0){
 		fcfs(process_list);
 	}else if(strcmp(argc[2],"SRTF") == 0){
@@ -39,10 +43,11 @@ int main(int argv, char *argc[]){
 	printf("************************************************************\n");
 	// printf("	On process list \"%s\"\n",argc[1]);
 
-
-
-
-	 print(process_list);
+	// if(strcmp(argc[2],"RR") == 0){
+	// 	printRR(process_list,atoi(argc[3]));
+	// }else{
+	// 	print(process_list);
+	// }
 
 	return 0;
 
