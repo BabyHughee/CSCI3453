@@ -54,23 +54,11 @@ struct process_data{
     double turnaround;
     int context_switchs;
 };
+
+template <class process_container> struct burstComp : std::binary_function <process_container,process_container,bool> {
+  bool operator() (const process_container& x, const process_container& y) const {return x->burst_time>y->burst_time;}
+};
 ////////////END PROCESS_CONTAINER DECLARATIONS///////////////////////////
-
-/**Comparison function for vector sorting*/
-inline bool compareSRTF(process_container* a, process_container* b)
-{
-    if( a->burst_time != b->burst_time){ //if no conflict
-        return a->burst_time < b->burst_time;
-    }
-    return a->arrival_time < b->arrival_time; //resolve conflict with FCFS
-}
-
-// template<typename process_container>
-// bool compareSRTF(process_container left, process_container right)
-// {
-//     return left < right;
-// }
-
 
 exception_status read(std::vector<process_container>&, std::string);
 void print(std::vector<process_container>&);
