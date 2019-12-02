@@ -1,5 +1,5 @@
-#ifndef TRYSTAN_KAEST_LAB_H
-#define TRYSTAN_KAEST_LAB_H
+#ifndef LAB3_HEADER_H
+#define LAB3_HEADER_H
 
 #include <iostream>
 #include <string>
@@ -7,6 +7,19 @@
 #include <fstream>
 #include <queue>
 #include "exceptionStatus.h"
+
+
+////////////BEGIN UTILITIES///////////////////////////
+
+//Temporary data holding for averages function
+struct process_data{
+    double burst;
+    double wait;
+    double turnaround;
+    int context_switchs;
+};
+
+////////////END UTILITIES///////////////////////////
 
 ////////////BEGIN PROCESS_CONTAINER DECLARATIONS///////////////////////////
 class process_container{
@@ -19,22 +32,11 @@ class process_container{
         int turn_around;
         int context_switchs;
 
-        //SORT METHOD FOR QUICKSORT ON VECTOR
-        bool operator<(const process_container& other) const
-        {
-            if( this->burst_time != other.burst_time){ //if no conflict
-                return this->burst_time < other.burst_time;
-            }
-            return this->arrival_time < other.arrival_time; //resolve conflict with FCFS
-        }
+        //Comparison overloads
+        bool operator<(const process_container& other) const;
+        bool operator>(const process_container& other) const;
+        bool operator==(const process_container& other) const;
 
-        bool operator>(const process_container& other) const
-        {
-            if( this->burst_time != other.burst_time){ //if no conflict
-                return this->burst_time > other.burst_time;
-            }
-            return this->arrival_time > other.arrival_time; //resolve conflict with FCFS
-        }
 
         //CONSTRUCTORS
         process_container(): pid(0), arrival_time(0), burst_time(0), finish_time(0),
@@ -47,26 +49,32 @@ class process_container{
 
 };
 
-
-struct process_data{
-    double burst;
-    double wait;
-    double turnaround;
-    int context_switchs;
-};
-
+/** This function is used to implement priority queues for the process_container
+  * class. These data structure adaptors are used to implement SRTF in this
+  * program. */
 template <class process_container> struct burstComp : std::binary_function <process_container,process_container,bool> {
   bool operator() (const process_container& x, const process_container& y) const {return x->burst_time>y->burst_time;}
 };
+
 ////////////END PROCESS_CONTAINER DECLARATIONS///////////////////////////
 
-exception_status read(std::vector<process_container>&, std::string);
-void print(std::vector<process_container>&);
-void printRR(std::vector<process_container>&,int);
-process_data averages(std::vector<process_container>&);
+
+
+////////////BEGIN FUNCTION DECLARATIONS///////////////////////////
+
+/////////////////////////////ALGORITHM EXECUTION FUNCTIONS/////////
 void fcfs(std::vector<process_container>&);
 void srtf(std::vector<process_container>&);
 void rr(std::vector<process_container>&, int);
-void testPrint(std::vector<process_container>& process_list);
+
+/////////////////////////////FINAL FORMATTING AND OUTPUT FUNCTIONS/////////
+void print(std::vector<process_container>&);
+void printGantt(process_container,int,int &,bool);
+process_data averages(std::vector<process_container>&);
+
+/////////////////////////////UTILITY FUNCTIONS/////////
+exception_status read(std::vector<process_container>&,std::string);
+
+////////////END FUNCTION DECLARATIONS///////////////////////////
 
 #endif

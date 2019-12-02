@@ -13,3 +13,6 @@ clean:
 
 %.o: %.cpp
 	$(CC) -c $(CC_FLAGS) $< -o $@
+
+%.o: %.m
+	$(CC) -c $(CC_FLAGS) $< -o $@

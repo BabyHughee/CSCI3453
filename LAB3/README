@@ -4,26 +4,34 @@ ID 108652414 (kaest)
 
 CSCI 3453
 
-Lab1
+Lab3
 
-**************************************************************
-************ TO COMPILE ----- 'make all'	               *****
-************ TO RUN --------- './trystan_kaest_lab1' 	   *****
-**************************************************************
+*************************************************************************
+************ TO COMPILE ----- 'make all'	                        *****
+************ TO RUN --------- 'myscheduler <filename> <algorithm>'  *****
+*************************************************************************
+
 
 DESCRIPTION:
-The primary goal of this assignment is to understand and gain some familiarity
-with the system call interface in Unix Environment. In this assignment you will
-be using system call and proc filesystem to gather information about the system.
+The primary goal of this lab assignment is to understand various CPU scheduling
+algorithms, gain some experience building a simulator for CPU scheduling
+algorithm and to evaluate their performances.
 
 
 ************Structure***********
-This entire program is contained within the trystan_kaest_lab1.cpp file.
-Upon running of this program it will print out to the screen all the
-systemInformation that was gathered. Two functions are seperated out that are
-designed to handle reading in from proc files in a clean way.
+This program holds the main driver in trystan_kaest_lab3.cpp.
 
-It also has a makefile in order to compile.
+The connection to the implementations and class declarations are in
+lab3_header.h
+
+The implementations are in lab3_implementation.cpp.
+
+There is an error class held in exceptionStatus.h used to track what went wrong
+during read in from a file.
+
+Command line arguments are entered upon run.
+
+makefile in order to compile.
 
 **************Status************
 

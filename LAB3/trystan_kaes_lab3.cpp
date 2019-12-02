@@ -1,4 +1,4 @@
-#include "trystan_kaes_lab3.h"
+#include "lab3_header.h"
 
 
 int main(int argv, char *argc[]){
@@ -23,9 +23,9 @@ int main(int argv, char *argc[]){
 	exception_status error = read(process_list, argc[1]); //read in the process'
 	if(error.error == true){ std::cout << error.status << std::endl; } //error ? output : move on
 
-	std::priority_queue<process_container*, std::vector<process_container*>, std::greater<process_container*>> backlog;
-
-
+	printf("************************************************************\n");
+	printf("*********** Scheduling algorithm : %-6s ******************\n", argc[2]);
+	printf("************************************************************\n");
 
 	if(strcmp(argc[2],"FCFS") == 0){
 		fcfs(process_list);
@@ -38,16 +38,9 @@ int main(int argv, char *argc[]){
 		return 0;
 	}
 
-	printf("************************************************************\n");
-	printf("*********** Scheduling algorithm : %-6s ******************\n", argc[2]);
-	printf("************************************************************\n");
-	// printf("	On process list \"%s\"\n",argc[1]);
 
-	if(strcmp(argc[2],"RR") == 0){
-		printRR(process_list,atoi(argc[3]));
-	}else{
-		print(process_list);
-	}
+	std::printf("\n(each star represents one ms)\n");
+	print(process_list);
 
 	return 0;
 

@@ -5,7 +5,7 @@
 ////CHANGE THESE VALUES TO ADJUST TEST FILE GENERATION///
 #define ARRIVAL_FREQUENCY 2
 #define BURST_RANGE 10
-#define PROCESS_AMNT 100 //Maximum for input files as specified in Lab3
+#define PROCESS_AMNT 100 //100 is markaximum for input files as specified in Lab3
 
 int main(int argv, char *argc[]){
 
