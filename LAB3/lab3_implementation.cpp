@@ -83,7 +83,12 @@ void srtf(std::vector<process_container>& process_list){
             if(current_process->burst_time == 0){ //if completly processed
                 backlog.pop(); //we done
                 current_process->burst_time = 99999999; //want to skip forward
-                std::vector<process_container>::iterator it = std::find(process_list.begin(), process_list.end(), (*current_process));
+                process_container* it;
+                for(int i = 0; i < process_list.size(); ++i){
+                    if(*current_process == process_list[i]){
+                        it = &process_list[i];
+                    }
+                }
                 it->waiting_time = runtime - it->burst_time; //calculate waiting time
             }
 
@@ -115,8 +120,13 @@ void srtf(std::vector<process_container>& process_list){
         if(current_process->burst_time == 0){
             backlog.pop(); //we done
             current_process->burst_time = 99999999; //want to skip forward
-            std::vector<process_container>::iterator it = std::find(process_list.begin(), process_list.end(), (*current_process));
-            it->waiting_time = runtime - it->burst_time;
+            process_container* it;
+            for(int i = 0; i < process_list.size(); ++i){
+                if(*current_process == process_list[i]){
+                    it = &process_list[i];
+                }
+            }
+            it->waiting_time = runtime - it->burst_time; //calculate waiting time
         }
 
     }

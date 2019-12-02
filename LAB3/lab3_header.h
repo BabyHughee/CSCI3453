@@ -2,7 +2,9 @@
 #define LAB3_HEADER_H
 
 #include <iostream>
+#include <stdio.h>
 #include <string>
+#include <string.h>
 #include <vector>
 #include <fstream>
 #include <queue>
