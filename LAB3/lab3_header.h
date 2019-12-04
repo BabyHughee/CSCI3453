@@ -56,11 +56,8 @@ class process_container{
   * program. */
 template <class process_container> struct burstComp : std::binary_function <process_container,process_container,bool> {
   bool operator() (const process_container& x, const process_container& y) const {
-      if( x->burst_time != y->burst_time){ //if no conflict
           return x->burst_time < y->burst_time;
-      }
-      return x->arrival_time < y->arrival_time; //resolve conflict with FCFS
-      }
+  }
 };
 
 ////////////END PROCESS_CONTAINER DECLARATIONS///////////////////////////
