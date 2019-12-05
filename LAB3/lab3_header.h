@@ -56,7 +56,7 @@ class process_container{
   * program. */
 template <class process_container> struct burstComp : std::binary_function <process_container,process_container,bool> {
   bool operator() (const process_container& x, const process_container& y) const {
-          return x->burst_time < y->burst_time;
+          return x->burst_time > y->burst_time;
   }
 };
 
