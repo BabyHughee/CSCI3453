@@ -176,8 +176,8 @@ void rr(std::vector<process_container>& process_list, int quantum){
     int j = 0;
     int reset = 0;
     int processRun = 0;
-    for (std::vector<process_container>::iterator i = process_list.begin(); i != process_list.end(); ++i, ++j){
-        r_burst[j] = i->burst_time;
+    for (int i = 0,j = 0; i < process_list.size(); ++i, ++j){
+        r_burst[j] = process_list[i].burst_time;
     }
 
     bool m_exit = false;
@@ -221,14 +221,14 @@ void rr(std::vector<process_container>& process_list, int quantum){
 
     // printf("\n*   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   "); //20 ms per line
 ///////////////Turn Around Times///////////////
-    for (std::vector<process_container>::iterator i = process_list.begin(); i != process_list.end(); ++i){
+    for (int i = 0; i < process_list.size(); ++i){
         //Turn around time of A[i] | A[i].turnaround = A[i].CPU_burst + A[i].wait_time
-        i->turn_around =  i->burst_time + i->waiting_time;
+        process_list[i].turn_around =  process_list[i].burst_time + process_list[i].waiting_time;
     }
 
 ///////////////Finish Times///////////////
-    for (std::vector<process_container>::iterator i = process_list.begin(); i != process_list.end(); ++i){
-            i->finish_time = i->burst_time + i->waiting_time;
+    for (int i = 0; i < process_list.size(); ++i){
+            process_list[i].finish_time = process_list[i].burst_time + process_list[i].waiting_time;
     }
 
 
